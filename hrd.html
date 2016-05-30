@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>hrd</title>
+        <style>
+            #container tr td{
+                padding: 50px;
+                background-color: #CCC;
+                cursor: default;
+            }
+        </style>
+    </head>
+    <body>
+        <table id="container">
+            <tr>
+                <td id="1"></td>
+                <td id="2"></td>
+                <td id="3"></td>
+            </tr>
+            <tr>
+                <td id="4"></td>
+                <td id="5"></td>
+                <td id="6"></td>
+            </tr>
+            <tr>
+                <td id="7"></td>
+                <td id="8"></td>
+                <td id="9"></td>
+            </tr>
+        </table>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript">
+function shuffle(arr)
+{
+    arr.sort(function(){return Math.random()>0.5?-1:1;});
+    return arr;
+}
+
+function init()
+{
+    var arr = new Array('1','2','3','4','5','6','7','8','');
+    var initArr = shuffle(arr);
+    $('#container td').each(function(){
+        var tmp = initArr.pop();
+        $(this).text(tmp);
+    });
+}
+
+function getSpaceId()
+{
+    var r = 0;
+    $('#container td').each(function(){
+        var tmp = $(this).text();
+        if(tmp == ''){
+            r = $(this).attr('id');
+        }
+    });
+    return parseInt(r);
+}
+
+function checkCanMove(clickid, spaceid)
+{
+    var r = false;
+    var delta = Math.abs(parseInt(clickid) - parseInt(spaceid));
+    if(delta == 1 || delta == 3 ){
+        r = true;
+    }
+    if( (clickid == 3 && spaceid == 4) || (clickid == 4 && spaceid == 3) ){
+        r = false;
+    }
+    if( (clickid == 6 && spaceid == 7) || (clickid == 7 && spaceid == 6) ){
+        r = false;
+    }
+    return r;
+}
+
+function swap(swapid, spaceid)
+{
+    var swaptext = $('#'+swapid).text();
+    $('#'+swapid).empty();
+    $('#'+spaceid).text(swaptext);
+}
+</script>
+<script type="text/javascript">
+init();
+$('#container td').click(function(){
+    var spaceid = getSpaceId();
+    var swapid = parseInt($(this).attr('id'));
+    if( checkCanMove(swapid,spaceid) ){
+        swap(swapid, spaceid);
+    }
+});
+</script>
+    </body>
+</html>
