@@ -7,7 +7,7 @@
             #container tr td{
                 padding: 50px;
                 background-color: #CCC;
-                cursor: default;
+                cursor: pointer;
             }
         </style>
     </head>
@@ -29,21 +29,23 @@
                 <td id="9"></td>
             </tr>
         </table>
-<script type="text/javascript" src="jquery.js"></script>
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script type="text/javascript">
 function shuffle(arr)
 {
-    arr.sort(function(){return Math.random()>0.5?-1:1;});
+    arr.sort(function(){
+        return Math.random() - 0.5;
+    });
     return arr;
 }
 
 function init()
 {
-    var arr = new Array('1','2','3','4','5','6','7','8','');
+    var arr = ['1', '2', '3', '4', '5', '6', '7', '8', ''];
     var initArr = shuffle(arr);
     $('#container td').each(function(){
-        var tmp = initArr.pop();
-        $(this).text(tmp);
+        var tmp = initArr.shift();
+        $(this).empty().text(tmp);
     });
 }
 
@@ -75,20 +77,20 @@ function checkCanMove(clickid, spaceid)
     return r;
 }
 
-function swap(swapid, spaceid)
+function swap(clickid, spaceid)
 {
-    var swaptext = $('#'+swapid).text();
-    $('#'+swapid).empty();
-    $('#'+spaceid).text(swaptext);
+    var clicktext = $('#'+clickid).text();
+    $('#'+clickid).empty();
+    $('#'+spaceid).empty().text(clicktext);
 }
-</script>
-<script type="text/javascript">
+
+// main logic
 init();
 $('#container td').click(function(){
     var spaceid = getSpaceId();
-    var swapid = parseInt($(this).attr('id'));
-    if( checkCanMove(swapid,spaceid) ){
-        swap(swapid, spaceid);
+    var clickid = parseInt($(this).attr('id'));
+    if( checkCanMove(clickid,spaceid) ){
+        swap(clickid, spaceid);
     }
 });
 </script>
