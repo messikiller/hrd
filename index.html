@@ -13,7 +13,6 @@
         </style>
     </head>
     <body>
-
         <table id="container">
             <tr>
                 <td id="1"></td>
@@ -36,9 +35,13 @@
 <script type="text/javascript">
 function shuffle(arr)
 {
-    arr.sort(function(){
-        return Math.random() - 0.5;
-    });
+    var n = Math.floor(Math.random()*100);
+    do {
+        arr.sort(function(){
+            return Math.random()-0.5;
+        });
+        n--;
+    } while( n>0 )
     return arr;
 }
 
@@ -68,15 +71,14 @@ function checkCanMove(clickid, spaceid)
 {
     var r = false;
     var delta = Math.abs(parseInt(clickid) - parseInt(spaceid));
-    if(delta == 1 || delta == 3 ){
-        r = true;
+    if( delta == 1 || delta == 3 ){
+        if( (clickid == 3 && spaceid == 4) || (clickid == 4 && spaceid == 3) || (clickid == 6 && spaceid == 7) || (clickid == 7 && spaceid == 6) ){
+            r = false;
+        } else {
+            r = true;
+        }
     }
-    if( (clickid == 3 && spaceid == 4) || (clickid == 4 && spaceid == 3) ){
-        r = false;
-    }
-    if( (clickid == 6 && spaceid == 7) || (clickid == 7 && spaceid == 6) ){
-        r = false;
-    }
+
     return r;
 }
 
@@ -93,7 +95,7 @@ $(document).ready(function(){
     $('#container td').click(function(){
         var spaceid = getSpaceId();
         var clickid = parseInt($(this).attr('id'));
-        if( checkCanMove(clickid,spaceid) ){
+        if( checkCanMove(clickid, spaceid) ){
             swap(clickid, spaceid);
         }
     });
