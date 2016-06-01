@@ -87,14 +87,16 @@ function swap(clickid, spaceid)
     $('#'+spaceid).empty().text(clicktext);
 }
 
-// main logic
-init();
-$('#container td').click(function(){
-    var spaceid = getSpaceId();
-    var clickid = parseInt($(this).attr('id'));
-    if( checkCanMove(clickid,spaceid) ){
-        swap(clickid, spaceid);
-    }
+// main process
+$(document).ready(function(){
+    init();
+    $('#container td').click(function(){
+        var spaceid = getSpaceId();
+        var clickid = parseInt($(this).attr('id'));
+        if( checkCanMove(clickid,spaceid) ){
+            swap(clickid, spaceid);
+        }
+    });
 });
 </script>
     </body>
