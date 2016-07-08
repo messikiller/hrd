@@ -61,7 +61,7 @@ function getSpaceId()
     var r = 0;
     $('#container td').each(function(){
         var tmp = $(this).text();
-        if(tmp == ''){
+        if (tmp == ''){
             r = $(this).attr('id');
         }
     });
@@ -72,11 +72,12 @@ function checkCanMove(clickid, spaceid)
 {
     var r = false;
     var delta = Math.abs(parseInt(clickid) - parseInt(spaceid));
-    if( delta == 1 || delta == 3 ){
-        if((clickid == 3 && spaceid == 4)
+    if (delta == 1 || delta == 3) {
+        if ((clickid == 3 && spaceid == 4)
             || (clickid == 4 && spaceid == 3)
             || (clickid == 6 && spaceid == 7)
-            || (clickid == 7 && spaceid == 6)){
+            || (clickid == 7 && spaceid == 6)
+        ) {
             r = false;
         } else {
             r = true;
